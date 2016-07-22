@@ -10,17 +10,17 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('formCtrl', function($scope) {
-    $scope.master = {name:""};
-    $scope.masterNamesRegistered = [];
+    $scope.master = {name:"",paid:"10"};
+    $scope.masterList = [];
     $scope.clear = function() {
         $scope.user = angular.copy($scope.master);
     };
     $scope.clear_all = function() {
-        $scope.namesRegistered = angular.copy($scope.masterNamesRegistered);
+        $scope.list = angular.copy($scope.masterList);
         $scope.clear();
     };
     $scope.register = function() {
-        $scope.namesRegistered.push($scope.user);
+        $scope.list.push($scope.user);
         $scope.clear();
     };
     $scope.clear_all();
@@ -52,7 +52,11 @@ app.controller('formCtrl', function($scope) {
         <div ng-app="myApp" ng-controller="formCtrl">
           <form novalidate>
             <br>
-            <input type="text" ng-model="user.name" Placeholder='Name' required='' autofocus><br>
+            <input type="text" ng-model="user.name" Placeholder='Name' class='form-control' required='' autofocus><br>
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <input type="text" ng-model="user.paid" class="form-control" Placeholder='0' required='' autofocus><br>
+            </div>
             <br><br>
             <button class='btn btn-lg btn-success' ng-click="register()">Register</button>
             <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
@@ -66,8 +70,9 @@ app.controller('formCtrl', function($scope) {
           <br/><br/>
           <h2 class='display-5'>Registered</h2>
           <table class='table table-striped'>
-            <tr ng-repeat="x in namesRegistered">
+            <tr ng-repeat="x in list">
               <td>{{ x.name }}</td>
+              <td>${{ x.paid }}</td>
             </tr>
           </table>
         </div>
