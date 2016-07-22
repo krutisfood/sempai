@@ -1,0 +1,5 @@
+{
+  "lambda_arn": "arn:aws:lambda:ap-southeast-2:354767127783:function:sempai", 
+  "app_name": "sempai", 
+  "stage": "dev"
+}
