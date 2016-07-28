@@ -11,16 +11,30 @@
 var app = angular.module('myApp', []);
 app.controller('formCtrl', function($scope) {
     $scope.master = {name:"",paid:10,registered:false};
+    $scope.total = 0;
     $scope.clear = function() {
       $scope.student = angular.copy($scope.master);
     };
+    $scope.addTotal = function() {
+      if ($scope.list.length == 0) return 0;
+      var sum = $scope.list.filter($scope.filter).reduce($scope.add);
+      return sum.paid;
+    };
+    $scope.filter = function(e, i, a) {
+      return e.registered == true;
+    };
+    $scope.add = function(a,b) {
+      return {paid:a.paid + b.paid};
+    };
     $scope.clear_all = function() {
       $scope.list = [];
+      $scope.total = 0;
       $scope.clear();
     };
     $scope.register = function() {
       $scope.student['registered'] = true;
       $scope.list.push($scope.student);
+      $scope.total += $scope.student.paid;
       $scope.clear();
     };
     $scope.preload = function() {
@@ -32,6 +46,7 @@ app.controller('formCtrl', function($scope) {
     $scope.update = function(student) {
       if (!student.registered) {
         student.registered = true;
+        $scope.total += student.paid;
       } else {
         $scope.student = student;
       }
@@ -107,10 +122,13 @@ app.controller('formCtrl', function($scope) {
                   <td>{{ x.registered ? 'present' : 'absent' }}</td>
                   <td>
                     <button type="button" ng-click="removeItem(x)" class="btn btn-sm btn-danger">
-                      <i class="glyphicon glyphicon-remove-circle"></i>
+                      <i class="glyphicon glyphicon-remove-circle">x</i>
                     </button>
                   </td>
-                  </div>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>${{ addTotal() }}</td>
                 </tr>
               </table>
             </div>
