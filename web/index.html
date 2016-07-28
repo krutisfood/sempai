@@ -104,7 +104,7 @@ app.controller('formCtrl', function($scope) {
                 <tr ng-click="update(x)" ng-class="x.registered == false ? 'text-muted': ''" ng-repeat="x in list">
                   <td>{{ x.name }}</td>
                   <td>${{ x.paid }}</td>
-                  <td st-sort='x.registered'>{{ x.registered }}</td>
+                  <td>{{ x.registered ? 'present' : 'absent' }}</td>
                   <td>
                     <button type="button" ng-click="removeItem(x)" class="btn btn-sm btn-danger">
                       <i class="glyphicon glyphicon-remove-circle"></i>
