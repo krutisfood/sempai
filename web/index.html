@@ -116,7 +116,7 @@ app.controller('formCtrl', function($scope) {
             <div class='col-md-4'>
               <h2 class='display-5'>Registered</h2>
               <table class='table table-striped'>
-                <tr ng-click="update(x)" ng-class="x.registered == false ? 'text-muted': ''" ng-repeat="x in list">
+                <tr ng-click="update(x)" ng-class="x.registered == false ? 'text-muted': ''" ng-repeat="x in list | orderBy:registered">
                   <td>{{ x.name }}</td>
                   <td>${{ x.paid }}</td>
                   <td>{{ x.registered ? 'present' : 'absent' }}</td>
