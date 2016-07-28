@@ -10,19 +10,32 @@
 <script>
 var app = angular.module('myApp', []);
 app.controller('formCtrl', function($scope) {
-    $scope.master = {name:"",paid:"10"};
-    $scope.masterList = [];
+    $scope.master = {name:"",paid:10,registered:false};
     $scope.clear = function() {
-        $scope.user = angular.copy($scope.master);
+      $scope.student = angular.copy($scope.master);
     };
     $scope.clear_all = function() {
-        $scope.list = angular.copy($scope.masterList);
-        $scope.clear();
+      $scope.list = [];
+      $scope.clear();
     };
     $scope.register = function() {
-        $scope.list.push($scope.user);
-        $scope.clear();
+      $scope.student['registered'] = true;
+      $scope.list.push($scope.student);
+      $scope.clear();
     };
+    $scope.preload = function() {
+      $fake_last_week = [{name: "Daniel", paid: 10, registered: false}, {name: "Miyagi", paid: 10, registered:false}, {name: "Ali", paid: 8,registered:false},
+        {name: "Kreeze", paid: 10,registered:false},{name: "Johnny", paid: 11,registered:false},
+        {name: "Boby", paid: 10, registered:false},{name: "Tommy", paid:11, registered: false}];
+      $scope.list = $scope.list.concat($fake_last_week);
+    };
+    $scope.update = function(student) {
+      if (!student.registered) {
+        student.registered = true;
+      } else {
+        $scope.student = student;
+      }
+    }
     $scope.clear_all();
 });
 </script>
@@ -48,41 +61,41 @@ app.controller('formCtrl', function($scope) {
       </div>
 
       <div class="jumbotron">
-        <div class="container">
+        <div class="container" ng-app='myApp' ng-controller='formCtrl'>
           <div class='row'>
-            <div class='col-md-4 col-md-offset-3'>
+            <!--<div class='col-md-4 col-md-offset-3'>-->
+            <div class='col-md-4'>
               <h1 class="display-3">Register</h1>
-              <div ng-app="myApp" ng-controller="formCtrl">
+              <!--<div ng-app="myApp" ng-controller="formCtrl">-->
+              <div>
                 <form novalidate>
-                  <input type="text" ng-model="user.name" Placeholder='Name' class='form-control' required='' autofocus><br>
+                  <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
+                  <button class='btn btn-lg btn-info' ng-click="preload()">Preload</button>
+                  <input type="text" ng-model="student.name" Placeholder='Name' class='form-control' required='' autofocus><br>
                   <div class="input-group">
                     <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button" ng-click="user.paid = user.paid - 1">-</button>
+                      <button class="btn btn-secondary" type="button" ng-click="student.paid = student.paid - 1">-</button>
                     </span>
-                    <input type="text" ng-model="user.paid" class="form-control" Placeholder='0' required='' autofocus><br>
+                    <input type="text" ng-model="student.paid" class="form-control" Placeholder='0' required='' autofocus><br>
                     <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button" ng-click="user.paid = user.paid + 1">+</button>
+                      <button class="btn btn-secondary" type="button" ng-click="student.paid = student.paid + 1">+</button>
                     </span>
                   </div>
                   <br><br>
                   <button class='btn btn-lg btn-success' ng-click="register()">Register</button>
-                  <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
                 </form>
-                <!--
-                <p>form = {{user}}</p>
-                <p>master = {{master}}</p>
-                <p>last registered = {{namesRegistered}}</p>
-                -->
-
-                <br/><br/>
-                <h2 class='display-5'>Registered</h2>
-                <table class='table table-striped'>
-                  <tr ng-repeat="x in list">
-                    <td>{{ x.name }}</td>
-                    <td>${{ x.paid }}</td>
-                  </tr>
-                </table>
               </div>
+            </div>
+            <div class='col-md-4'>
+              <h2 class='display-5'>Registered</h2>
+              <table class='table table-striped'>
+                <tr ng-click="update(x)" ng-class="x.registered == false ? 'text-muted': ''" ng-repeat="x in list">
+                  <td>{{ x.name }}</td>
+                  <td>${{ x.paid }}</td>
+                  <td st-sort='x.registered'>{{ x.registered }}</td>
+                  </div>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
