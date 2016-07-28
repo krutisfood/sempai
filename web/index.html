@@ -36,6 +36,13 @@ app.controller('formCtrl', function($scope) {
         $scope.student = student;
       }
     }
+    //remove to the real data holder
+    $scope.removeItem = function removeItem(row) {
+        var index = $scope.list.indexOf(row);
+        if (index !== -1) {
+            $scope.list.splice(index, 1);
+        }
+    }
     $scope.clear_all();
 });
 </script>
@@ -65,14 +72,18 @@ app.controller('formCtrl', function($scope) {
           <div class='row'>
             <!--<div class='col-md-4 col-md-offset-3'>-->
             <div class='col-md-4'>
-              <h1 class="display-3">Register</h1>
+              <h1 class="display-5">Register</h1>
               <!--<div ng-app="myApp" ng-controller="formCtrl">-->
               <div>
-                <form novalidate>
-                  <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
-                  <button class='btn btn-lg btn-info' ng-click="preload()">Preload</button>
-                  <input type="text" ng-model="student.name" Placeholder='Name' class='form-control' required='' autofocus><br>
-                  <div class="input-group">
+                <form novalidate class='form-horizontal'>
+                  <div class="form-group">
+                    <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
+                    <button class='btn btn-lg btn-info' ng-click="preload()">Preload</button>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" ng-model="student.name" Placeholder='Name' class='form-control' required='' autofocus><br>
+                  </div>
+                  <div class="form-group input-group">
                     <span class="input-group-btn">
                       <button class="btn btn-secondary" type="button" ng-click="student.paid = student.paid - 1">-</button>
                     </span>
@@ -81,8 +92,9 @@ app.controller('formCtrl', function($scope) {
                       <button class="btn btn-secondary" type="button" ng-click="student.paid = student.paid + 1">+</button>
                     </span>
                   </div>
-                  <br><br>
-                  <button class='btn btn-lg btn-success' ng-click="register()">Register</button>
+                  <div class="form-group">
+                    <button type='submit' text='Register' class='btn btn-lg btn-success' ng-click="register()">Register</button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -93,6 +105,11 @@ app.controller('formCtrl', function($scope) {
                   <td>{{ x.name }}</td>
                   <td>${{ x.paid }}</td>
                   <td st-sort='x.registered'>{{ x.registered }}</td>
+                  <td>
+                    <button type="button" ng-click="removeItem(x)" class="btn btn-sm btn-danger">
+                      <i class="glyphicon glyphicon-remove-circle"></i>
+                    </button>
+                  </td>
                   </div>
                 </tr>
               </table>
