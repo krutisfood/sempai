@@ -2,7 +2,7 @@
 <html lang="en">
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/narrow-jumbotron.css">
+<!--<link rel="stylesheet" href="/css/narrow-jumbotron.css">-->
 <!--<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" integrity="sha384-XXXXXXXX" crossorigin="anonymous"></script>-->
 <body>
 
@@ -48,33 +48,43 @@ app.controller('formCtrl', function($scope) {
       </div>
 
       <div class="jumbotron">
-        <h1 class="display-3">Register</h1>
-        <div ng-app="myApp" ng-controller="formCtrl">
-          <form novalidate>
-            <br>
-            <input type="text" ng-model="user.name" Placeholder='Name' class='form-control' required='' autofocus><br>
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <input type="text" ng-model="user.paid" class="form-control" Placeholder='0' required='' autofocus><br>
-            </div>
-            <br><br>
-            <button class='btn btn-lg btn-success' ng-click="register()">Register</button>
-            <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
-          </form>
-          <!--
-          <p>form = {{user}}</p>
-          <p>master = {{master}}</p>
-          <p>last registered = {{namesRegistered}}</p>
-          -->
+        <div class="container">
+          <div class='row'>
+            <div class='col-md-4 col-md-offset-3'>
+              <h1 class="display-3">Register</h1>
+              <div ng-app="myApp" ng-controller="formCtrl">
+                <form novalidate>
+                  <input type="text" ng-model="user.name" Placeholder='Name' class='form-control' required='' autofocus><br>
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button" ng-click="user.paid = user.paid - 1">-</button>
+                    </span>
+                    <input type="text" ng-model="user.paid" class="form-control" Placeholder='0' required='' autofocus><br>
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button" ng-click="user.paid = user.paid + 1">+</button>
+                    </span>
+                  </div>
+                  <br><br>
+                  <button class='btn btn-lg btn-success' ng-click="register()">Register</button>
+                  <button class='btn btn-lg btn-warning' ng-click="clear_all()">CLEAR</button>
+                </form>
+                <!--
+                <p>form = {{user}}</p>
+                <p>master = {{master}}</p>
+                <p>last registered = {{namesRegistered}}</p>
+                -->
 
-          <br/><br/>
-          <h2 class='display-5'>Registered</h2>
-          <table class='table table-striped'>
-            <tr ng-repeat="x in list">
-              <td>{{ x.name }}</td>
-              <td>${{ x.paid }}</td>
-            </tr>
-          </table>
+                <br/><br/>
+                <h2 class='display-5'>Registered</h2>
+                <table class='table table-striped'>
+                  <tr ng-repeat="x in list">
+                    <td>{{ x.name }}</td>
+                    <td>${{ x.paid }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!--
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
