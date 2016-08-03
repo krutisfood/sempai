@@ -39,12 +39,14 @@ app.controller('formCtrl', function($scope) {
       $scope.list.push($scope.student);
       $scope.total += $scope.student.paid;
       $scope.clear();
+      $scope.$apply(); // TODO Replace with directive ala http://nathanleclaire.com/blog/2014/01/31/banging-your-head-against-an-angularjs-issue-try-this/
     };
     $scope.preload = function() {
       $fake_last_week = [{name: "Daniel", paid: 10, registered: false}, {name: "Miyagi", paid: 10, registered:false}, {name: "Ali", paid: 8,registered:false},
         {name: "Kreeze", paid: 10,registered:false},{name: "Johnny", paid: 11,registered:false},
         {name: "Boby", paid: 10, registered:false},{name: "Tommy", paid:11, registered: false}];
       $scope.list = $scope.list.concat($fake_last_week);
+      $scope.$apply();
     };
     $scope.update = function(student) {
       if (!student.registered) {
@@ -53,13 +55,15 @@ app.controller('formCtrl', function($scope) {
       } else {
         $scope.student = student;
       }
+      $scope.$apply();
     }
     //remove to the real data holder
     $scope.removeItem = function removeItem(row) {
-        var index = $scope.list.indexOf(row);
-        if (index !== -1) {
-            $scope.list.splice(index, 1);
-        }
+      var index = $scope.list.indexOf(row);
+      if (index !== -1) {
+          $scope.list.splice(index, 1);
+      }
+      $scope.$apply();
     }
     $scope.clear_all();
 });
