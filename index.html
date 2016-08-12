@@ -41,9 +41,23 @@ app.controller('formCtrl', function($scope) {
       // Check here if already in the list!
       console.log(JSON.stringify($scope.student));
       $scope.student['registered'] = true;
-      $scope.list.push($scope.student);
+      addOrNot($scope.student, $scope.list);
       $scope.total += $scope.student.paid;
       $scope.clear();
+    };
+    function addOrNot(student, list) {
+      if (!containsStudent(student, list)) {
+        $scope.list.push(student);
+      }
+    };
+    function containsStudent(student, list) {
+      var i;
+      for (i = 0; i < list.length; i++) {
+        if (list[i].name === student.name) {
+            return true;
+        }
+      }
+      return false;
     };
     $scope.preload = function() {
       $fake_last_week = [{name: "Daniel", paid: 10, registered: false}, {name: "Miyagi", paid: 10, registered:false}, {name: "Ali", paid: 8,registered:false},
@@ -124,12 +138,12 @@ app.controller('formCtrl', function($scope) {
             <div class='col-md-4'>
               <h2 class='display-5'>Registered</h2>
               <table class='table table-striped'>
-                <tr ng-click="update(x)" ng-class="x.registered == false ? 'text-muted': ''" ng-repeat="x in list | orderBy:registered">
-                  <td>{{ x.name }}</td>
-                  <td>${{ x.paid }}</td>
-                  <td>{{ x.registered ? 'present' : 'absent' }}</td>
+                <tr ng-click="update(list[key])" ng-class="list[key].registered == false ? 'text-muted': ''" ng-repeat="(key,value) in list | orderBy:registered">
+                  <td>{{ list[key].name }}</td>
+                  <td>${{ list[key].paid }}</td>
+                  <td>{{ list[key].registered ? 'present' : 'absent' }}</td>
                   <td>
-                    <button type="button" ng-click="removeItem(x)" class="btn btn-sm btn-danger">
+                    <button type="button" ng-click="removeItem(list[key])" class="btn btn-sm btn-danger">
                       <i class="glyphicon glyphicon-remove-circle">x</i>
                     </button>
                   </td>
