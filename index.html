@@ -35,6 +35,8 @@ app.controller('formCtrl', function($scope) {
       $scope.clear();
     };
     $scope.register = function() {
+      // Check here if already in the list!
+      console.log(JSON.stringify($scope.student));
       $scope.student['registered'] = true;
       $scope.list.push($scope.student);
       $scope.total += $scope.student.paid;
