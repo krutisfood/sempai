@@ -19,8 +19,11 @@ app.controller('formCtrl', function($scope) {
       $scope.student = angular.copy($scope.master);
     };
     $scope.addTotal = function() {
-      if ($scope.list.length == 0) return 0;
-      var sum = $scope.list.filter($scope.filter).reduce($scope.add);
+      console.log("DEBUG: list length" + $scope.list.length);
+      if ($scope.list.length <= 0) return 0;
+      var registered = $scope.list.filter($scope.filter);
+      if (registered.length <= 0) return 0;
+      var sum = registered.reduce($scope.add);
       return sum.paid;
     };
     $scope.filter = function(e, i, a) {
@@ -49,11 +52,10 @@ app.controller('formCtrl', function($scope) {
       $scope.list = $scope.list.concat($fake_last_week);
     };
     $scope.update = function(student) {
+      $scope.student = student;
       if (!student.registered) {
         student.registered = true;
         $scope.total += student.paid;
-      } else {
-        $scope.student = student;
       }
     }
     //remove to the real data holder
